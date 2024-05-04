@@ -1,9 +1,9 @@
 class User:
     def __init__(self, driver: bool, occupation, name, email, age, password):
-        self._occupation = occupation
-        self._name = name
-        self._email = email
-        self._age = age
+        self.__occupation = occupation
+        self.__name = name
+        self.__email = email
+        self.__age = age
         self.__vehicle = list()
         self.__driver = driver
         self.password = password
@@ -11,19 +11,19 @@ class User:
 
     @property
     def occupation(self):
-        return self._occupation
+        return self.__occupation
 
     @property
     def nome(self):
-        return self._name
+        return self.__name
 
     @property
     def email(self):
-        return self._email
+        return self.__email
 
     @property
     def age(self):
-        return self._age
+        return self.__age
 
     def store_car(self, car):
         self.__vehicle.append(car)

@@ -77,22 +77,25 @@ class System:
                         if origin == ride.origin and destiny == ride.destiny and date == ride.date == date and hour == ride.hour:
                             rides.append([vehicle, ride])
         option_ride = None
-        while option_ride not in range(1, len(rides) + 2):
-            count = 1
-            for ride in rides:
+        if len(rides) == 0:
+            print("Não há boleias com estas características.")
+        else:
+            while option_ride not in range(1, len(rides) + 2):
+                count = 1
+                for ride in rides:
+                    print("-=" * 15)
+                    print(f"{count} - {ride[0]}\n{ride[1]}")
+                    count += 1
                 print("-=" * 15)
-                print(f"{count} - {ride[0]}\n{ride[1]}")
-                count += 1
-            print("-=" * 15)
-            print(f"{count} - Não reservar.")
-            option_ride = int(input("Selecione uma boleia para reservar: "))
-        if option_ride < len(rides) + 1:
-            if rides[option_ride - 1][1].status == "Unavailable":
-                print("Esta boleia já foi reservada.")
-            else:
-                rides[option_ride - 1][1].status = "Unavailable"
-                self.__user.boleias.append(rides[option_ride])
-                print("Boleia reservada com sucesso.")
+                print(f"{count} - Não reservar.")
+                option_ride = int(input("Selecione uma boleia para reservar: "))
+            if option_ride < len(rides) + 1:
+                if rides[option_ride - 1][1].status == "Unavailable":
+                    print("Esta boleia já foi reservada.")
+                else:
+                    rides[option_ride - 1][1].status = "Unavailable"
+                    self.__user.boleias.append(rides[option_ride - 1])
+                    print("Boleia reservada com sucesso.")
 
     def publish_ride(self):
         if len(self.__user.vehicles) == 0:
@@ -123,15 +126,14 @@ class System:
                     print(f"{count} - {i[1]}")
                     count += 1
                 option_evaluation = int(input("> "))
-            print(f"Selecionou: \n{self.__user.boleias[option_evaluation]}")
+            print(f"Selecionou: \n{self.__user.boleias[option_evaluation - 1][1]}")
             aval = None
             while aval not in range(1, 6):
                 aval = int(input("Como avalias de 1 a 5: "))
-            self.__user.boleias[option_evaluation][1].evaluation = aval
+            self.__user.boleias[option_evaluation - 1][1].evaluation = aval
             print("Obrigado pela avaliação!")
         else:
             print("Sem boleias para avaliar.")
-
 
     def run(self):
         while True:
